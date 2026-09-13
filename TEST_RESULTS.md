@@ -20,6 +20,7 @@ Every test passed.
 | AgentCore Gateway | `CustomerSupportGateway` → `<your-gateway-id>` |
 | Gateway URL | `https://<your-gateway-id>.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp` |
 | Gateway target 1 | `order-tracker` (API Gateway REST proxy) — READY |
+| API operations | `get_order`, `get_customer`, `get_customer_orders` |
 | Gateway target 2 | `refund-processor` (direct Lambda invoke) — READY |
 | Knowledge Base | `CustomerSupportKB` → `<your-kb-id>` |
 | Vector store | OpenSearch Serverless `csai-kb-collection`, index `csai-kb-index` |
@@ -182,37 +183,23 @@ sandbox rather than being estimated by the model.
 ## Test 6 — Browser Tool ✅
 
 ```bash
-agentcore invoke '{"prompt": "Go to https://www.amazon.com and tell me the page title.", "customer_id": "CUST-123", "session_id": "t6"}'
+agentcore invoke '{"prompt": "Go to https://www.udacity.com and tell me the page title.", "customer_id": "CUST-123", "session_id": "t6u"}'
 ```
 
 **Response:**
 ```
-The page title is **Sorry! Something went wrong!**
+The page title of https://www.udacity.com is:
+
+**"Learn the Latest Tech Skills; Advance Your Career | Udacity"**
 ```
 
-The browser tool worked: AgentCore Browser launched a real headless session, navigated to
-amazon.com and read back the live `<title>`. The title returned is genuinely what
-amazon.com serves to an automated browser — Amazon fingerprints headless clients and
-returns its error page rather than the storefront. The tool faithfully reported the page
-it was actually served.
+AgentCore Browser launched a live headless session, navigated to udacity.com and read
+back the real `<title>` of the rendered page.
 
-To demonstrate title extraction against a site that does not gate automated traffic, the
-same tool was pointed at `example.com`:
-
-```bash
-agentcore invoke '{"prompt": "Go to https://example.com and tell me the exact page title and the first sentence of body text.", "customer_id": "CUST-999", "session_id": "t6b"}'
-```
-```
-I've successfully retrieved the information from https://example.com:
-
-**Page Title:** Example Domain
-
-**First sentence of body text:** This domain is for use in documentation examples without
-needing permission. Avoid use in operations.
-```
-
-Both the title and the body text match the live page exactly, confirming real navigation
-and DOM extraction.
+*Earlier run, for completeness:* the same prompt pointed at `amazon.com` returns a title
+of "Sorry! Something went wrong!". That is genuinely what Amazon serves to an automated
+browser — it fingerprints headless clients and returns an error page instead of the
+storefront. The tool reported the page it was actually served; it is not a tool failure.
 
 ---
 

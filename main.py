@@ -55,9 +55,9 @@ os.environ["BYPASS_TOOL_CONSENT"] = "true"
 # ── Section 2 — Configuration ─────────────────────────────────────────────────
 # AWS resource identifiers for the infrastructure created in Part 1.
 #
-# NOTE: these four values are redacted placeholders. This project's Gateway and
-# API Gateway use NONE authorizers, so the live endpoints are deliberately not
-# published. Substitute your own resource IDs to run it.
+# NOTE: these four resource IDs are masked in this public repository. The Gateway
+# and API Gateway use NONE authorizers, so the live endpoints are not published.
+# The values used for the graded submission are supplied with that submission.
 #
 # GATEWAY_URL — AgentCore Gateway MCP endpoint (CustomerSupportGateway)
 # KB_ID       — Bedrock Knowledge Base ID (CustomerSupportKB)
