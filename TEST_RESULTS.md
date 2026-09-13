@@ -1,11 +1,15 @@
 # Functional Test Results — AI Customer Support Agent
 
 **Account:** <account-id> · **Region:** us-east-1
-**Agent runtime:** `customer_support_agent-<suffix>`
-**Agent ARN:** `arn:aws:bedrock-agentcore:us-east-1:<account-id>:runtime/customer_support_agent-<suffix>`
+**Agent runtime:** `customer_support_agent-KUrjK9D7x9`
+**Agent ARN:** `arn:aws:bedrock-agentcore:us-east-1:<account-id>:runtime/customer_support_agent-KUrjK9D7x9`
 
 All six scenarios were executed against the live deployed agent via `agentcore invoke`.
-Every test passed.
+Every test passed. A terminal screenshot of each run is in [`screenshots/`](screenshots/).
+
+> Account ID and the live Gateway / API Gateway URLs are redacted in this public copy —
+> both endpoints use `authorizerType: NONE`, as the course instructions allow for a
+> throwaway lab account. The unredacted values are in the graded submission.
 
 ---
 
@@ -15,22 +19,24 @@ Every test passed.
 |---|---|
 | Order tracking Lambda | `csai-order-tracker` |
 | Refund Lambda | `csai-refund-processor` |
-| API Gateway REST API | `<your-api-id>` (stage `prod`) |
-| API endpoint | `https://<your-api-id>.execute-api.us-east-1.amazonaws.com/prod` |
-| AgentCore Gateway | `CustomerSupportGateway` → `<your-gateway-id>` |
-| Gateway URL | `https://<your-gateway-id>.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp` |
+| API Gateway REST API | `<api-id>` (stage `prod`) |
+| API endpoint | `<redacted>` — unauthenticated lab endpoint |
+| AgentCore Gateway | `CustomerSupportGateway` → `customersupportgateway-<id>` |
+| Gateway URL | `<redacted>` — unauthenticated lab endpoint |
 | Gateway target 1 | `order-tracker` (API Gateway REST proxy) — READY |
 | API operations | `get_order`, `get_customer`, `get_customer_orders` |
 | Gateway target 2 | `refund-processor` (direct Lambda invoke) — READY |
-| Knowledge Base | `CustomerSupportKB` → `<your-kb-id>` |
+| Knowledge Base | `CustomerSupportKB` → `4BYWCH8IHB` |
 | Vector store | OpenSearch Serverless `csai-kb-collection`, index `csai-kb-index` |
-| Memory | `CustomerSupportMemory-<suffix>` — ACTIVE |
+| Memory | `CustomerSupportMemory-bZS8B68ug5` — ACTIVE |
 | Memory strategy 1 | `customer_facts` (SEMANTIC) → `cs_agent/{actorId}/facts` |
 | Memory strategy 2 | `customer_preferences` (USER_PREFERENCE) → `cs_agent/{actorId}/preferences` |
 
 ---
 
 ## Test 1 — Order Tracking ✅
+
+![Test 1 — order tracking](screenshots/test_1_order_tracking.png)
 
 ```bash
 agentcore invoke '{"prompt": "Can you track order ORD-001?", "customer_id": "CUST-123", "session_id": "t1"}'
@@ -58,6 +64,8 @@ delivery date — all four present. This exercises the full path: agent → Agen
 
 ## Test 2 — Refund Processing ✅
 
+![Test 2 — refund processing](screenshots/test_2_refund_processing.png)
+
 ```bash
 agentcore invoke '{"prompt": "I want to return my Kindle Paperwhite (ORD-002). Please initiate a refund.", "customer_id": "CUST-123", "session_id": "t2"}'
 ```
@@ -84,6 +92,8 @@ total, so the provided Lambda echoed its default. The refund itself is correctly
 
 ## Test 3 — Knowledge Base (RAG) ✅
 
+![Test 3 — knowledge base RAG](screenshots/test_3_knowledge_base_rag.png)
+
 ```bash
 agentcore invoke '{"prompt": "What are the benefits of the Platinum loyalty tier?", "customer_id": "CUST-123", "session_id": "t3"}'
 ```
@@ -106,6 +116,10 @@ and OpenSearch Serverless.
 ---
 
 ## Test 4 — Memory (Long-Term, Cross-Session) ✅
+
+![Test 4a — session A](screenshots/test_4a_memory_session_a.png)
+
+![Test 4b — session B](screenshots/test_4b_memory_session_b.png)
 
 **Session A:**
 ```bash
@@ -146,6 +160,8 @@ A also demonstrates recall, pulling in the orders from sessions `t1` and `t2`.
 
 ## Test 5 — Loyalty Discount Calculation (Code Interpreter) ✅
 
+![Test 5 — loyalty discount](screenshots/test_5_loyalty_discount.png)
+
 ```bash
 agentcore invoke '{"prompt": "I am a Gold member with 4250 points. Calculate my discount on a $150 standard order.", "customer_id": "CUST-123", "session_id": "t5"}'
 ```
@@ -182,6 +198,8 @@ sandbox rather than being estimated by the model.
 
 ## Test 6 — Browser Tool ✅
 
+![Test 6 — browser tool](screenshots/test_6_browser_tool.png)
+
 ```bash
 agentcore invoke '{"prompt": "Go to https://www.udacity.com and tell me the page title.", "customer_id": "CUST-123", "session_id": "t6u"}'
 ```
@@ -205,7 +223,7 @@ storefront. The tool reported the page it was actually served; it is not a tool 
 
 ## Part 4 — CloudWatch Monitoring ✅
 
-**Log group:** `/aws/bedrock-agentcore/runtimes/customer_support_agent-<suffix>-DEFAULT`
+**Log group:** `/aws/bedrock-agentcore/runtimes/customer_support_agent-KUrjK9D7x9-DEFAULT`
 
 **Metric filter** — `CustomerSupportAgentErrors`
 

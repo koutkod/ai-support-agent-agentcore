@@ -54,6 +54,7 @@ lambda/
   refund_processor.py      # initiate_refund, check_refund_status, get_return_label
   lambda_schema            # MCP tool schema for the refund Gateway target
 TEST_RESULTS.md            # verbatim output for all 6 required test scenarios
+screenshots/               # terminal screenshots of each test run
 REFLECTION.md              # design decision, challenge, production considerations
 IMPLEMENTATION_NOTES.md    # notes on how each section was implemented
 ```
@@ -81,7 +82,8 @@ point at the AWS resources created in Part 1 and must match your own account.
 ## Test results
 
 All six required scenarios pass against the deployed agent. Full transcripts are in
-[`TEST_RESULTS.md`](TEST_RESULTS.md).
+[`TEST_RESULTS.md`](TEST_RESULTS.md), and a terminal screenshot of every run is in
+[`screenshots/`](screenshots/).
 
 | # | Scenario | Result |
 |---|---|---|

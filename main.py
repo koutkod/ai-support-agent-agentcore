@@ -55,16 +55,12 @@ os.environ["BYPASS_TOOL_CONSENT"] = "true"
 # ── Section 2 — Configuration ─────────────────────────────────────────────────
 # AWS resource identifiers for the infrastructure created in Part 1.
 #
-# NOTE: these four resource IDs are masked in this public repository. The Gateway
-# and API Gateway use NONE authorizers, so the live endpoints are not published.
-# The values used for the graded submission are supplied with that submission.
-#
 # GATEWAY_URL — AgentCore Gateway MCP endpoint (CustomerSupportGateway)
 # KB_ID       — Bedrock Knowledge Base ID (CustomerSupportKB)
 # REGION      — AWS region hosting all of the above
 # MEMORY_ID   — AgentCore Memory resource ID (CustomerSupportMemory)
 
-GATEWAY_URL = "https://<your-gateway-id>.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp"
+GATEWAY_URL = "https://customersupportgateway-<id>.gateway.bedrock-agentcore.us-east-1.amazonaws.com/mcp"
 KB_ID       = "<your-kb-id>"
 REGION      = "us-east-1"
 MEMORY_ID   = "CustomerSupportMemory-<suffix>"
