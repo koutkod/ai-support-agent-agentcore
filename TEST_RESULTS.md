@@ -1,6 +1,6 @@
 # Functional Test Results — AI Customer Support Agent
 
-**Account:** <account-id> · **Region:** us-east-1
+**Account:** `<account-id>` · **Region:** us-east-1
 **Agent runtime:** `customer_support_agent-KUrjK9D7x9`
 **Agent ARN:** `arn:aws:bedrock-agentcore:us-east-1:<account-id>:runtime/customer_support_agent-KUrjK9D7x9`
 
