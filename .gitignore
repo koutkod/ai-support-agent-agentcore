@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# uv
+uv.lock
+
+# AgentCore toolkit state (contains account-specific ARNs and role names)
+.bedrock_agentcore.yaml
+Dockerfile
+.dockerignore
+
+# Build / deploy scratch
+*.log
+*.b64
+resources.json
+cw_resources.txt
+step*.py
+fixrole.py
+cfg.txt
+tgt.txt
+
+# OS
+.DS_Store
